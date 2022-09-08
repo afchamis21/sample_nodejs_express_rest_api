@@ -1,11 +1,17 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express, { urlencoded } from 'express'
+import { statusRouter } from './routes/status.route'
+import { userRoutes } from './routes/users.route'
 
 const app = express()
 
-app.get('/status', (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).send({ message: 'Hello World 2' })
-})
+// Configs
+app.use(express.json())
+app.use(urlencoded({ extended: true }))
+
+// Routes
+app.use(userRoutes)
+app.use(statusRouter)
 
 app.listen(5555, () => {
-  console.log('App rodando em http://localhost:5555/')
+  console.log('App running on http://localhost:5555/')
 })
